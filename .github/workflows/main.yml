@@ -23,7 +23,7 @@ jobs:
         working-directory: fe/
 
       - name: Build frontend
-        run: npm run build
+        run: npm run bundleprod
         working-directory: fe/
 
       - name: Deploy to EC2
