@@ -1,0 +1,38 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18 # Use the desired Node.js version
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: fe/
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: fe/
+
+      - name: Deploy to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }} # Add your EC2 instance IP/hostname
+          username: ${{ secrets.EC2_USERNAME }} # Add your EC2 username
+          key: ${{ secrets.EC2_PRIVATE_KEY }} # Add your EC2 private key (base64 encoded)
+          source: 
+              /fe/dist_prod
+              /be # Path to your build files (assuming you build to a "build" directory)
+          target: "/home/ubuntu/website" # Path to your remote directory on the EC2 instance
