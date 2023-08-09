@@ -1,0 +1,107 @@
+.product_cont{
+    display: flex;
+    flex-direction: row;
+    margin-top: 120px;
+    margin-left: 150px;
+}
+.product_card{
+width: 260px;
+height: 310px;
+margin: 0px 20px;
+border: 1px solid #D9D9D9;
+
+}
+.card_cont{
+        margin-left: 69px;
+                width: 1300px;
+                height: 720px;
+                display: flex;
+                padding:0px 10px ;
+                flex-wrap: wrap;
+               
+                justify-content: start;
+
+}
+.card_details>p{
+    margin: 0;
+    margin-left: 30px;
+}
+.toggle_btn{
+    background-color: white;
+   color:grey; 
+    border: 1px solid grey;
+}
+.btn-check+.btn:hover {
+   
+    background-color: white;
+    color:grey; 
+     border: 1px solid grey;
+}
+
+.btn-check:checked+.btn{
+    border: 1px solid grey;
+    background-color: #D9D9D9;
+}
+.right_triangle {
+    position: absolute;
+    rotate: 90deg;
+    left: 1720px;
+    top: 505px;
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 20px solid #D9D9D9;
+    transition: border-bottom 0.5s;
+  }
+  .left_triangle {
+    position: absolute;
+    rotate: -90deg;
+    left: 490px;
+    top: 505px;
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 20px solid #D9D9D9;
+    transition: border-bottom 0.5s;
+
+  }
+  .left_triangle:hover{
+    border-bottom: 20px solid #5F63B0;
+    
+  }
+  .right_triangle:hover{
+    border-bottom: 20px solid #5F63B0;
+    
+  }
+ .pag_cont{
+    width: 600px;
+    height: 90px;
+    position: absolute;
+ 
+    left: 830px;
+    top:870px;
+    display: flex;
+    justify-content: center;
+    
+ }
+ .active>.page-link{
+    background-color: #D9D9D9;
+    border-color: #D9D9D9;
+ }
+ .page-link{
+    color: grey;
+ }
+ /* .page-link:hover {
+    color: #5F63B0;
+
+ }
+  */
+  .page-link:focus {
+    z-index: 0;
+    color: #5F63B0;
+    background-color:white;
+    outline: none;
+    box-shadow: none;
+} 

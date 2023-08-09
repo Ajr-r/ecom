@@ -1,0 +1,76 @@
+const phonesdata = [
+  { name: "iPhone 13", price: "₹80000", rating: 5 },
+  { name: "Samsung Galaxy S21", price: "₹60000", rating: 4 },
+  { name: "OnePlus 9 Pro", price: "₹55000", rating: 4 },
+  { name: "Google Pixel 6", price: "₹45000", rating: 3 },
+  { name: "Xiaomi Mi 11X", price: "₹35000", rating: 3 },
+  { name: "Realme GT 5G", price: "₹30000", rating: 4 },
+  { name: "Oppo Reno 6 Pro", price: "₹40000", rating: 4 },
+  { name: "Vivo V21", price: "₹28000", rating: 2 },
+  { name: "Motorola Edge 20", price: "₹32000", rating: 4 },
+  { name: "Nokia X20", price: "₹25000", rating: 3 },
+  { name: "Motorola G Power", price: "₹17000", rating: 3 },
+  { name: "BlackBerry Key2", price: "₹24000", rating: 2 },
+  { name: "HTC U12+", price: "₹28000", rating: 3 },
+  { name: "ZTE Axon 30 Ultra", price: "₹32000", rating: 4 },
+  { name: "Xiaomi Redmi Note 11", price: "₹15000", rating: 3 },
+  { name: "Sony Xperia 1 III", price: "₹56000", rating: 4 },
+  { name: "Google Pixel 5a", price: "₹32000", rating: 4 },
+  { name: "Realme Narzo 50", price: "₹14000", rating: 2 },
+  { name: "Vivo Y72s", price: "₹18000", rating: 3 },
+  { name: "Asus ZenFone 8", price: "₹42000", rating: 4 },
+];
+
+  const tshirtsdata = [
+    { name: "Plain White T-Shirt", price: "₹1000", rating: 4 },
+    { name: "Graphic Print T-Shirt", price: "₹1200", rating: 3 },
+    { name: "Striped Polo T-Shirt", price: "₹1500", rating: 2 },
+    { name: "V-Neck Casual T-Shirt", price: "₹1100", rating: 4 },
+    { name: "Sports Logo T-Shirt", price: "₹1300", rating: 5 },
+    { name: "Crew Neck Vintage Tee", price: "₹900", rating: 3 },
+    { name: "Long Sleeve Henley", price: "₹1700", rating: 2 },
+    { name: "Retro Tie-Dye T-Shirt", price: "₹1400", rating: 4 },
+    { name: "Slim Fit Graphic Tee", price: "₹1250", rating: 1 },
+    { name: "Pocket Front T-Shirt", price: "₹1050", rating: 5 },
+    { name: "Retro Logo Tee", price: "₹950", rating: 4 },
+    { name: "Patterned Crewneck", price: "₹800", rating: 3 },
+    { name: "Classic Polo Shirt", price: "₹1100", rating: 4 },
+    { name: "Henley Neck Tee", price: "₹700", rating: 2 },
+    { name: "Distressed Print T-Shirt", price: "₹850", rating: 3 },
+    { name: "Casual V-Neck Tee", price: "₹600", rating: 4 },
+    { name: "Tie-Dye Summer Tee", price: "₹750", rating: 3 },
+    { name: "Oversized Fit T-Shirt", price: "₹900", rating: 2 },
+    { name: "Urban Camo Print Tee", price: "₹800", rating: 4 },
+    { name: "Longline Scoop Neck", price: "₹700", rating: 3 },
+  ];
+  
+  const shoesdata = [
+    { name: "Nike Air Max", price: "₹1200", rating: 4 },
+    { name: "Adidas Ultraboost", price: "₹1400", rating: 3 },
+    { name: "Puma RS-X Sneakers", price: "₹1100", rating: 3 },
+    { name: "New Balance 990v5", price: "₹1300", rating: 4 },
+    { name: "Converse Chuck Taylor", price: "₹600", rating: 2 },
+    { name: "Vans Old Skool", price: "₹700", rating: 1 },
+    { name: "Reebok Classic Leather", price: "₹800", rating: 4 },
+    { name: "Under Armour HOVR Sonic", price: "₹1000", rating: 5 },
+    { name: "Brooks Ghost 14", price: "₹1500", rating: 4 },
+    { name: "Skechers D'Lites", price: "₹900", rating: 4 },
+    { name: "Salomon Speedcross 5", price: "₹1400", rating: 5 },
+    { name: "Mizuno Wave Rider 25", price: "₹1200", rating: 4 },
+    { name: "Saucony Endorphin Shift", price: "₹1300", rating: 4 },
+    { name: "Hoka One One Bondi 7", price: "₹1500", rating: 5 },
+    { name: "Altra Lone Peak 5", price: "₹1400", rating: 4 },
+    { name: "Merrell Moab 2 Ventilator", price: "₹1100", rating: 3 },
+    { name: "Columbia Redmond V2", price: "₹900", rating: 3 },
+    { name: "Brooks Adrenaline GTS 22", price: "₹1300", rating: 4 },
+    { name: "Newton Gravity 10", price: "₹1200", rating: 3 },
+    { name: "Inov-8 Trailtalon 235", price: "₹1100", rating: 3 },
+  ];
+  
+  
+  
+  module.exports={
+    phonesdata,
+    shoesdata,
+    tshirtsdata
+  }
