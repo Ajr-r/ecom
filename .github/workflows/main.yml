@@ -32,19 +32,15 @@ jobs:
         run: |
             ls -la fe/dist_prod/
             ls -la be/  
-
-
-      - name: Deploy to EC2
-        uses: appleboy/scp-action@master
+      - name: SSH into EC2
+        uses: webfactory/ssh-agent@v0.5.1
         with:
-          host: ${{ secrets.EC2_HOST }} # Add your EC2 instance IP/hostname
-          username: ${{ secrets.EC2_USERNAME }} # Add your EC2 username
-          key: ${{ secrets.EC2_PRIVATE_KEY }} # Add your EC2 private key (base64 encoded)
-          source: 
-              /fe/dist_prod
-              /be # Path to your build files (assuming you build to a "build" directory)
-          target: "/home/ubuntu/website" # Path to your remote directory on the EC2 instance
-          debug: true
+          ssh-private-key: ${{ secrets.EC2_PRIVATE_KEY }}
+        
+      - name: Run SSH Command
+        run: ssh ubuntu@13.126.77.241 'ls -la'
+
+ 
           
       
    
