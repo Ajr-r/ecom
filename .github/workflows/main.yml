@@ -42,7 +42,7 @@ jobs:
         run: which sshpass
       - name: SSH into EC2
         run: |
-          echo ${{ secrets.EC2_PRIVATE_KEY }} | sshpass -p -e ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "ls -la"
+          echo Dev0981 | sshpass -p -e ssh ubuntu@13.126.77.241 "ls -la"
 
  
           
