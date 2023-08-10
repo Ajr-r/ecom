@@ -42,7 +42,7 @@ jobs:
         run: which sshpass
       - name: SSH into EC2
         run: |
-          echo Dev0981 | sshpass -p -e ssh ubuntu@13.126.77.241 "ls -la"
+          echo 'Dev0981' | sshpass -p -e ssh -v ubuntu@13.126.77.241 "ls -la"
 
  
           
