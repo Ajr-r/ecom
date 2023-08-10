@@ -27,22 +27,14 @@ jobs:
         run: npm run bundleprod
         working-directory: fe/
         
-      - name: Update package list
-        run: sudo apt-get update
-  
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
 
-        
-      - name: List Contents of Source Directories
-        run: |
-            ls -la fe/dist_prod/
-            ls -la be/  
+
+ 
       - name: finding the path 
         run: which sshpass
       - name: SSH into EC2
         run: |
-          echo 'Dev0981' | sshpass -p -e ssh -v ubuntu@13.126.77.241 "ls -la"
+          echo 'Dev0981' | sshpass -p -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v ubuntu@13.126.77.241 "ls -la"
 
  
           
