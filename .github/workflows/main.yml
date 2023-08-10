@@ -26,6 +26,7 @@ jobs:
         run: npm run bundleprod
         working-directory: fe/
 
+
       - name: Deploy to EC2
         uses: appleboy/scp-action@master
         with:
