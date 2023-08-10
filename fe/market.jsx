@@ -8,6 +8,7 @@ import { Nav_bar } from "./home.jsx";
 import "./assets/CSS/market.css"
 import Pagination from 'react-bootstrap/Pagination';
 import axios from "axios";
+
 function Category({setcat}) {
     let cat = useParams()
     const [value, setValue] = useState(() => {
