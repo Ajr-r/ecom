@@ -38,6 +38,8 @@ jobs:
         run: |
             ls -la fe/dist_prod/
             ls -la be/  
+      - name: finding the path 
+        run: which sshpass
       - name: SSH into EC2
         run: sshpass '${{secrets.EC2_PRIVATE_KEY}}' ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} ls 
 
