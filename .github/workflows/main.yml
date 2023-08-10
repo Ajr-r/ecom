@@ -39,3 +39,9 @@ jobs:
               /be # Path to your build files (assuming you build to a "build" directory)
           target: "/home/ubuntu/website" # Path to your remote directory on the EC2 instance
           debug: true
+          
+      - name: List Contents of Source Directories
+        run: |
+            ls -la fe/dist_prod/
+            ls -la be/
+   
