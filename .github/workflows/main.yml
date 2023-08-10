@@ -33,12 +33,7 @@ jobs:
             ls -la fe/dist_prod/
             ls -la be/  
       - name: SSH into EC2
-        uses: webfactory/ssh-agent@v0.5.1
-        with:
-          ssh-private-key: ${{ secrets.EC2_PRIVATE_KEY }}
-        
-      - name: Run SSH Command
-        run: ssh ubuntu@13.126.77.241 'ls -la'
+        run: sshpass ${{secrets.EC2_PRIVATE_KEY}} ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} ls 
 
  
           
