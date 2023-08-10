@@ -38,3 +38,4 @@ jobs:
               /fe/dist_prod
               /be # Path to your build files (assuming you build to a "build" directory)
           target: "/home/ubuntu/website" # Path to your remote directory on the EC2 instance
+          debug: true
