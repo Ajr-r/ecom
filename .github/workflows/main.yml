@@ -41,7 +41,7 @@ jobs:
       - name: finding the path 
         run: which sshpass
       - name: SSH into EC2
-        run: sshpass '${{secrets.EC2_PRIVATE_KEY}}' ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} ls 
+        run: /usr/bin/sshpass '${{secrets.EC2_PRIVATE_KEY}}' ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} ls 
 
  
           
