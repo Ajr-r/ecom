@@ -47,5 +47,8 @@ jobs:
           script: |
             cd ~/website
             ls
+            cd be
+            npm i
             pm2 stop app
+            
             pm2 start be/src/app.js
