@@ -9,16 +9,6 @@ app.use(cors({
   origin: '*',
   optionsSuccessStatus: 200,
 }));
-// open livereload high port and start to watch public directory for changes
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch('/home/arjith/web_dev/proj/ecom/fe/dist_prod');
-
-// ping browser on Express boot, once browser has reconnected and handshaken
-liveReloadServer.server.once("connection", () => {
-  setTimeout(() => {
-    liveReloadServer.refresh("/");
-  }, 100);
-});
 app.get('/data/:category',(req,res)=>{
   res.header('Cache-Control', 'public, max-age=3600'); 
   if(req.params.category=="phones")res.send(phonesdata)
@@ -27,7 +17,7 @@ app.get('/data/:category',(req,res)=>{
 })
 
 app.use(connectLivereload());
-app.use(exp.static('../fe/dist_prod'))
+app.use(exp.static('../../dist_prod'))
 app.listen(3000,()=>{
     console.log('server started')
 })
