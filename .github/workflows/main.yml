@@ -35,7 +35,7 @@ jobs:
           REMOTE_USER: ${{secrets.EC2_USERNAME }}
           SOURCE: fe/dist_prod be
           TARGET: /home/ubuntu/website
-          ARGS: --delete
+          ARGS: "--delete"
 
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
