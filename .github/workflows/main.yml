@@ -31,15 +31,15 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{secrets.EC2_PRIVATE_KEY }}
-          REMOTE_HOST: 13.126.77.241
-          REMOTE_USER: ubuntu
+          REMOTE_HOST: ${{secrets.EC2_HOST }}
+          REMOTE_USER: ${{secrets.EC2_USERNAME }}
           TARGET: /home/ubuntu/website
 
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
           host: 13.126.77.241
-          username: ubuntu
+          username: ${{secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             cd ~/website
