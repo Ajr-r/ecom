@@ -31,8 +31,8 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
+          REMOTE_HOST: 13.126.77.241
+          REMOTE_USER: ubuntu
           TARGET: /home/ubuntu/website
 
       - name: Executing remote ssh commands using ssh key
