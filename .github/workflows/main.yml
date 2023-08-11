@@ -19,24 +19,33 @@ jobs:
         with:
           node-version: 18 # Use the desired Node.js version
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: fe/
+#       - name: Install dependencies
+#         run: npm install
+#         working-directory: fe/
 
-      - name: Build frontend
-        run: npm run bundleprod
-        working-directory: fe/
+#       - name: Build frontend
+#         run: npm run bundleprod
+#         working-directory: fe/
         
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: /home/ubuntu/website
 
-
- 
-      - name: finding the path 
-        run: which sshpass
-      - name: SSH into EC2
-        run: |
-          echo 'Dev0981' | sshpass -p -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v ubuntu@13.126.77.241 "ls -la"
-
- 
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: 13.126.77.241
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd ~/website
+            ls
+            
+          
           
       
    
