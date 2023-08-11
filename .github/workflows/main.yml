@@ -30,7 +30,7 @@ jobs:
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{secrets.EC2_PRIVATE_KEY }}
           REMOTE_HOST: 13.126.77.241
           REMOTE_USER: ubuntu
           TARGET: /home/ubuntu/website
