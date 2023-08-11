@@ -13,6 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -25,19 +26,23 @@ jobs:
       - name: Build frontend
         run: npm run bundleprod
         working-directory: fe/
-
-      - name: Copy Files to Server
-        run: |
-          ssh -i ${{secrets.EC2_PRIVATE_KEY}} ${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}} \
-            "mkdir -p ~/website" # Create target directory if not exists
-
-          rsync -e "ssh -i ${{secrets.EC2_PRIVATE_KEY}}" -rL --delete \
-            fe/dist_prod/ ${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}:~/website/fe/
-
-          rsync -e "ssh -i ${{secrets.EC2_PRIVATE_KEY}}" -rL --delete \
-            be/ ${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}:~/website/be/
+        
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.EC2_PRIVATE_KEY }}
+          REMOTE_HOST: ${{secrets.EC2_HOST }}
+          REMOTE_USER: ${{secrets.EC2_USERNAME }}
+          SOURCE: fe/dist_prod be
+          TARGET: /home/ubuntu/website
+          ARGS: -r
 
       - name: Executing remote ssh commands using ssh key
-        run: |
-          ssh -i ${{secrets.EC2_PRIVATE_KEY}} ${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}} \
-            "cd ~/website/fe && ls"
+        uses: appleboy/ssh-action@master
+        with:
+          host:  ${{secrets.EC2_HOST }}
+          username: ${{secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd ~/website/fe
+            ls
