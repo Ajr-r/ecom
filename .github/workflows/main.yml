@@ -18,13 +18,12 @@ jobs:
         with:
           node-version: 18 # Use the desired Node.js version
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies and bundle prod
+        run: |
+         npm install
+         npm run bundleprod 
         working-directory: fe/
 
-      - name: Build frontend
-        run: npm run bundleprod
-        working-directory: fe/
         
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
