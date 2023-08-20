@@ -9,7 +9,7 @@ import "./assets/CSS/market.css"
 import Pagination from 'react-bootstrap/Pagination';
 import axios from "axios";
 
-function Category({setcat}) {
+function Category({ setcat, setsort }) {
     let cat = useParams()
     const [value, setValue] = useState(() => {
         if (cat.category == 'phones') return 1
@@ -18,38 +18,54 @@ function Category({setcat}) {
     });
     const [category, setcategory] = useState(cat.category);
 
-    const handleChange = (val,e) => {
-        if(e.target.value==1)setcat('phones')
-        else if(e.target.value==2)setcat('shoes')
+    const handleChange = (val, e) => {
+        if (e.target.value == 1) setcat('phones')
+        else if (e.target.value == 2) setcat('shoes')
         else setcat('tshirts')
         setValue(val)
     };
+    function sort(e) {
+        setsort(e.target.value)
+    }
     return (
-        <div style={{ borderRadius: "20px 20px 0 0", backgroundColor: "#D9D9D9", width: "300px", height: "310px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div>
 
-            <div style={{ margin: "20px", height: "200px", width: "200px", backgroundColor: "#305469", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ borderRadius: "20px 20px 0 0", backgroundColor: "#D9D9D9", width: "300px", height: "310px", display: "flex", flexDirection: "column", alignItems: "center" }}>
 
-                <p>{category}</p>
+                <div style={{ margin: "20px", height: "200px", width: "200px", backgroundColor: "#305469", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+
+                    <p>{category}</p>
+                </div>
+
+
+
+
+                <ToggleButtonGroup type="radio" value={value} onChange={handleChange} name="cat">
+                    <ToggleButton className="toggle_btn" id="tbg-btn-1" value={1} onClick={() => setcategory('Phones')}>
+                        Phone
+                    </ToggleButton>
+                    <ToggleButton className="toggle_btn" id="tbg-btn-2" value={2} onClick={() => setcategory('Shoes')}>
+                        Shoes
+                    </ToggleButton>
+                    <ToggleButton className="toggle_btn" id="tbg-btn-3" value={3} onClick={() => setcategory('Tshirts')}>
+                        Tshirts
+                    </ToggleButton>
+                </ToggleButtonGroup>
+
+
             </div>
+            <div>
+                <label htmlFor="sort">Sort by</label>
+                <select name="sort" id="" onChange={(e) => { sort(e) }}>
+                    <option value="ph" selected disabled >Select</option>
 
-
-
-
-            <ToggleButtonGroup type="radio" value={value} onChange={handleChange} name="cat">
-                <ToggleButton className="toggle_btn" id="tbg-btn-1" value={1} onClick={() => setcategory('Phones')}>
-                    Phone
-                </ToggleButton>
-                <ToggleButton className="toggle_btn" id="tbg-btn-2" value={2} onClick={() => setcategory('Shoes')}>
-                    Shoes
-                </ToggleButton>
-                <ToggleButton className="toggle_btn" id="tbg-btn-3" value={3} onClick={() => setcategory('Tshirts')}>
-                    Tshirts
-                </ToggleButton>
-            </ToggleButtonGroup>
-
-
+                    <option value="ph"> price high to low</option>
+                    <option value="pl"> price low to high</option>
+                    <option value="rh"> rating high to low</option>
+                    <option value="rl"> rating low to high</option>
+                </select>
+            </div>
         </div>
-
     )
 }
 function Pagin({ page, maxcount, setpage }) {
@@ -91,7 +107,8 @@ function Product() {
     const [bin_data, setbin] = useState({})
     const [fetched, setfetched] = useState(false)
     const [maxcount, setmaxcount] = useState(0)
-    const [cat,setcat]=useState(params.category)
+    const [cat, setcat] = useState(params.category)
+    const [sort, setsort] = useState('unsorted')
     // console.log(cat)
     // console.log(maxcount)
     // console.log(page)
@@ -121,20 +138,42 @@ function Product() {
 
 
     }
-    function d() {
+    function sort_data(data){
+        let arr =[...data]
 
-        
-            axios.get(`http://localhost:3000/data/${cat}`)
-                .then((r) => {
-                    let binnned_data = bin(r.data)
-                    setbin(binnned_data)
-                    setdata(binnned_data[page])
-                    setfetched(!fetched)
-                })
-        
+        if (sort[0]=='p') {
+            arr.sort((a, b) => {
+                const priceA = parseInt(a.price.slice(1)); // Convert ₹1200 to 1200
+                const priceB = parseInt(b.price.slice(1));
+                return (sort=='ph'?priceB - priceA:priceA - priceB);
+            })
+        }
+        else{
+            arr.sort((a, b) => {
+              
+                return (sort=='rh'?b.rating - a.rating:a.rating - b.rating);
+            })
+            
+        }
+        return arr;
 
     }
-    useEffect(d, [page,cat])
+    function d() {
+
+
+        axios.get(`http://localhost:3000/data/${cat}`)
+            .then((r) => {
+                    let sorted_data=sort_data(r.data)
+
+                let binnned_data = bin(sorted_data)
+                setbin(binnned_data)
+                setdata(binnned_data[page])
+                setfetched(!fetched)
+            })
+
+
+    }
+    useEffect(d, [page, cat, sort])
 
     function changepage(e) {
         if (e.target.className == 'left_triangle') {
@@ -152,7 +191,7 @@ function Product() {
 
     return (
         <div className="product_cont">
-            <Category setcat={setcat} />
+            <Category setcat={setcat} setsort={setsort} />
             <div className="right_triangle" onClick={changepage} ></div>
             <div className="left_triangle" onClick={changepage}></div>
 

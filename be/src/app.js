@@ -1,10 +1,8 @@
 let {phonesdata,shoesdata,tshirtsdata}=require('./data')
 const exp =require('express')
 const app=exp()
-const livereload = require("livereload");
-const connectLivereload = require("connect-livereload");
 const cors = require('cors');
-console.log(phonesdata)
+const path =require('path')
 app.use(cors({
   origin: '*',
   optionsSuccessStatus: 200,
@@ -15,9 +13,12 @@ app.get('/data/:category',(req,res)=>{
   else if(req.params.category=="shoes")res.send(shoesdata)
   else res.send(tshirtsdata)
 })
+app.get('*',(req,res)=>{
+  res.sendFile('/home/arjith/web_dev/proj/ecom/fe/dist_prod/index.html')
+})
 
-app.use(connectLivereload());
-app.use(exp.static('../../dist_prod'))
+app.use(exp.static(path.join(__dirname, '../../fe/dist_prod')));
+console.log(path.join(__dirname, '../../fe/dist_prod'))
 app.listen(3000,()=>{
     console.log('server started')
 })
