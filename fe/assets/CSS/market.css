@@ -100,8 +100,84 @@ border: 1px solid #D9D9D9;
   */
   .page-link:focus {
     z-index: 0;
-    color: #5F63B0;
+    r: #5F63B0;
     background-color:white;
     outline: none;
     box-shadow: none;
-} 
+}
+.filter{
+  margin-top: 10px;
+  height: 40px;
+  border-radius: 0 0 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D9D9D9;
+
+}
+.filter> select{
+  border-color: grey;
+  color: black;
+  font-weight: 300;
+  padding: 5px;
+  border-radius: 10px;
+}
+ .filter> select:focus{
+  outline: none !important;
+
+
+}
+.descp{
+  width: 1000px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  top: 100px;
+  left: 400px;
+
+}
+.phone_table{
+  margin-top: 40px;
+ 
+}
+.phone_table  td{
+  animation: textfadein 1.2s ease-in-out;
+  text-align: center;
+  width: 200px;
+  padding: 15px;
+  border: 1px solid grey;
+}
+.phone_table  img{
+  height: 30px;
+  width: 30px;
+}
+.backbtn{
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  left: 1080px;
+  top: -65px;
+  transform: rotateX(180deg);
+  transition: scale 0.5s, filter 0.5s;
+
+}
+.backbtn:hover{
+  scale: 1.2;
+  filter: invert(41%) sepia(70%) saturate(374%) hue-rotate(197deg) brightness(87%) contrast(94%);
+
+
+}
+.descp p,h2{
+  animation:  textfadein 1s;
+}
+@keyframes textfadein {
+  0%{
+    transform: translateX(15px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0px);
+    opacity: 100;
+  }
+  
+}
