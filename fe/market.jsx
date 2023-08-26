@@ -18,13 +18,17 @@ function Category({ setcat, setsort }) {
     const [category, setcategory] = useState(cat.category);
 
     const handleChange = (val, e) => {
-        if (e.target.value == 1) setcat('phones')
-        else if (e.target.value == 2) setcat('shoes')
-        else setcat('tshirts')
+        let str=''
+        if (e.target.value == 1) str='phones'
+        else if (e.target.value == 2) str='shoes' 
+        else str='tshirts'
+        setcat(str)
+        sessionStorage.setItem('cat',str)
         setValue(val)
     };
     function sort(e) {
         setsort(e.target.value)
+        sessionStorage.setItem('sort',e.target.value)
     }
     return (
         <div>
@@ -76,6 +80,9 @@ function Pagin({ page, maxcount, setpage }) {
     useEffect(() => setactive(page), [page])
     function changepage(number) {
         setpage(number)
+        console.log(number,"dsds")
+        sessionStorage.setItem('page',number)
+        // setactive(number)
 
     }    // const [ini_fetch,set_set]
     // console.log(cat)
@@ -96,8 +103,13 @@ function Pagin({ page, maxcount, setpage }) {
     );
 }
 
-function Product_card({ name, price, rating,setview }) {
-    return <div className="product_card" onClick={()=>{setview(true)}}>
+function Product_card({ name, price, rating,setview,setitem,id}) {
+   
+    function click(){
+        setview(true)
+        setitem(id)
+    }
+    return <div className="product_card" onClick={click}>
         <div style={{ margin: "10px 28px", width: "200px", height: "230px", backgroundColor: "#D9D9D9" }}></div>
         <div className="card_details">
             <p>{name}</p>
@@ -106,8 +118,9 @@ function Product_card({ name, price, rating,setview }) {
         </div>
     </div>
 }
-function Product({setview}) {
+function Product({setview,setitem}) {
     const params = useParams()
+    
     const [data, setdata] = useState([])
     const [rawdata, setrawdata] = useState([])
     const [page, setpage] = useState(1)
@@ -117,6 +130,8 @@ function Product({setview}) {
     const [cat, setcat] = useState(params.category)
     const [prev_cat, setprev_cat] = useState('')
     const [sort, setsort] = useState('unsorted')
+    console.log(page)
+
     function bin(data_array) {
         let binnned_data = {}
         let temp = []
@@ -171,6 +186,20 @@ function Product({setview}) {
 
     }
     function fetch_data() {
+        if(sessionStorage.getItem('page')){
+            setpage(sessionStorage.getItem('page'))
+        }
+        if(sessionStorage.getItem('cat')){
+            setcat(sessionStorage.getItem('cat'))
+            
+        }
+        if(sessionStorage.getItem('sort')){
+            setsort(sessionStorage.getItem('sort'))
+            
+        }
+
+
+
         if(!fetched || prev_cat!=cat){
             axios.get(`http://localhost:3000/data/${cat}`)
             .then((r) => {
@@ -184,6 +213,7 @@ function Product({setview}) {
             })
         }
         else{
+            console.log("dsd",page)
             let sorted_data=sort_data(rawdata)
             let binnned_data = bin(sorted_data)
             setbin(binnned_data)
@@ -198,15 +228,23 @@ function Product({setview}) {
         if (e.target.className == 'left_triangle') {
             if (page == 1) return
 
-            else setpage(page - 1)
+            else {
+                setpage(page - 1)
+                sessionStorage.setItem('page',parseInt(page)-1)
+            }
         }
         else {
             if (page == maxcount) return
-            else setpage(page + 1)
+            else {
+                setpage(parseInt(page) + 1)
+                sessionStorage.setItem('page',parseInt(page) + 1)
+
+            }
         }
 
 
     }
+
 
     return (
         <div className="product_cont">
@@ -217,9 +255,10 @@ function Product({setview}) {
             <div className="card_cont">
 
                 {data.map(e => {
+                   
                     return (
 
-                        <Product_card name={e.name} price={e.price} rating={e.rating} key={e.id} setview={setview}/>
+                        <Product_card name={e.name} price={e.price} rating={e.rating} key={e.id} setview={setview} setitem={setitem} id={e.id}/>
                     )
 
                 })}
@@ -234,11 +273,12 @@ function Product({setview}) {
 }
 export function Market() {
     const [view,setview]=useState(false)
-    console.log(view)
+    const [item,setitem]=useState('')
+
     return (
         <div>
             <Nav_bar phone={false} shoe={false} tshirt={false} home={true} widths={"1900px"} />
-            {view?<Product_description setview={setview}/>:<Product setview={setview}/>}
+            {view?<Product_description setview={setview} item={item}/>:<Product setview={setview}setitem={setitem} />}
         </div>
 
 

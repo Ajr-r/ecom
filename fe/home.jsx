@@ -138,6 +138,9 @@ function Footer_home() {
     )
 }
 export function Home() {
+    useEffect(()=>{
+        sessionStorage.clear()
+    },[])
     return (
         <>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", overflow: "hidden" }}>

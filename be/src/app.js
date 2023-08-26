@@ -1,4 +1,4 @@
-let {phonesdata,shoesdata,tshirtsdata}=require('./data')
+let {phonesdata,shoesdata,tshirtsdata,proddata}=require('./data')
 const exp =require('express')
 const app=exp()
 const cors = require('cors');
@@ -11,8 +11,11 @@ app.get('/data/:category',(req,res)=>{
   res.header('Cache-Control', 'public, max-age=3600'); 
   if(req.params.category=="phones")res.send(phonesdata)
   else if(req.params.category=="shoes")res.send(shoesdata)
+  else if(req.params.category=="desc")res.send(proddata)
   else res.send(tshirtsdata)
 })
+
+
 app.get('*',(req,res)=>{
   res.sendFile('/home/arjith/web_dev/proj/ecom/fe/dist_prod/index.html')
 })
