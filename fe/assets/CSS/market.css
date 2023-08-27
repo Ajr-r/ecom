@@ -9,6 +9,14 @@ width: 260px;
 height: 310px;
 margin: 0px 20px;
 border: 1px solid #D9D9D9;
+transition: all 0.5s;
+}
+.product_card:hover{
+  box-shadow: 0px 0px 20px #5F63B0;
+  scale: 1.01;
+  transform: translateY(-10px);
+ 
+ 
 
 }
 .card_cont{
@@ -136,11 +144,11 @@ border: 1px solid #D9D9D9;
   left: 400px;
 
 }
-.phone_table{
+.phone_table,.shoe_table{
   margin-top: 40px;
  
 }
-.phone_table  td{
+.phone_table  td,.shoe_table td{
   animation: textfadein 1.2s ease-in-out;
   text-align: center;
   width: 200px;

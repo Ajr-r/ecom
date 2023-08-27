@@ -11,6 +11,7 @@ import './assets/CSS/home.css'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
+import cartsvg from "./assets/cart.svg";
 
 
 export function Nav_bar({phone,shoe,tshirt,home,widths}) {
@@ -49,7 +50,7 @@ export function Nav_bar({phone,shoe,tshirt,home,widths}) {
                     </Nav>
                 </Navbar.Collapse>
                 <input type="text" className="search" placeholder={ph} />
-
+                <img className="cartsvg"src={cartsvg} alt="" />
             </Container>
         </Navbar>
     );

@@ -9,10 +9,55 @@ import weightsvg from "./assets/phonesvgs/weight.svg";
 import sizesvg from "./assets/phonesvgs/size.svg";
 import backsvg from "./assets/back.svg"
 import axios from "axios";
+import addsvg from "./assets/add.svg"
+import Col from 'react-bootstrap/Col';
+import Toast from 'react-bootstrap/Toast';
+
+function DismissibleExample({toast,settoast,name}) {
+    const [showA, setShowA] = useState();
+    const toggleShowA = () =>{ 
+        setShowA(!showA);
+        settoast(false)
+    }
+    useEffect(()=>setShowA(toast),[toast])
+    console.log(toast,"in toast")
+ 
+
+    return (
+    
+        <Col md={4} className="mb-1" style={{height:"100px",position:"absolute",left:"1150px",top:"650px"}}>
+        
+          <Toast show={showA} onClose={toggleShowA}>
+            <Toast.Header>
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto">New Message</strong>
+              
+            </Toast.Header>
+            <Toast.Body>{name} has been added to cart</Toast.Body>
+          </Toast>
+        </Col>
+        
+   
+    );
+  }
 
 export function Product_description({ setview, item }) {
 
     const [data, setdata] = useState([])
+    const [s,sets]=useState(false)
+    const [p,setp]=useState(false)
+    const [t,sett]=useState(false)
+    const [toast,settoast]=useState(false)
+    useEffect(()=>{
+        if(item[0]=='p')setp(true)
+        else if (item[0]=='s')sets(true)
+        else sett(true)
+    },[])
+    
     const [fetched, setfetched] = useState(false)
     useEffect(() => {
         axios.get(`http://localhost:3000/data/desc`)
@@ -27,8 +72,12 @@ export function Product_description({ setview, item }) {
         setview(false)
 
     }
+    console.log(toast)
     return (
         <div className="descp">
+            
+
+    
             <img className="backbtn" src={backsvg} alt="" onClick={back} />
             <div className="pic_cont" style={{ display: "flex", flexDirection: "row" }}>
                 <div>
@@ -40,14 +89,15 @@ export function Product_description({ setview, item }) {
                 <div style={{ background: "#d9d9", height: "660px", width: "500px", marginTop: "20px" }}></div>
             </div>
             {fetched && (
-
-
                 <div style={{ marginLeft: "40px", marginTop: "20px" }}>
-                    <h2>{data[item].name}</h2>
+                    <DismissibleExample toast={toast} settoast={settoast} name={data[item].name}/>
+                    <h2>{data[item].name} &nbsp; &nbsp;<img onClick={()=>settoast(true)} style={{width:"40px",height:"40px"}} src={addsvg} alt="" /></h2>
                     <br />
-                    <p>800000</p>
+                    <p>{data[item].price}</p>
                     <p style={{ width: "500px" }}>{data[item].desc}</p>
-                    <h4>Technical specification</h4>
+                    {p&&(<>
+
+                        <h4>Technical specification</h4>
                     <table className="phone_table">
                         <tbody>
 
@@ -77,6 +127,43 @@ export function Product_description({ setview, item }) {
                             </tr>
                         </tbody>
                     </table>
+                    </>
+                    )}
+                    {s&&(
+                                   <table className="shoe_table">
+                                   <tbody>
+           
+                                       <tr>
+                                           <td> Color</td>
+                                           <td style={{ textAlign: "left" }}>{data[item].color}</td>
+                                       </tr>
+                                       <tr>
+                                           <td>Avialbale sizes</td>
+                                           <td style={{ textAlign: "left" }}>{data[item].sizes.map((i)=>' '+i).toString()}</td>
+                                       </tr>
+                                     
+                                       <tr>
+                                           <td>Weight</td>
+                                           <td style={{ textAlign: "left" }}>{data[item].weight}</td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+
+                    )}
+                                        {t&&(
+                                   <table className="shoe_table">
+                                   <tbody>
+           
+                                      
+                                       <tr>
+                                           <td>Avialbale sizes</td>
+                                           <td style={{ textAlign: "left" }}>{data[item].sizes.map((i)=>' '+i).toString()}</td>
+                                       </tr>
+                                 
+                                   </tbody>
+                               </table>
+
+                    )}
 
                 </div>
             )}
