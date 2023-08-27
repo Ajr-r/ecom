@@ -11,6 +11,11 @@ import {Product_description} from './product_desc.jsx'
 function Category({ setcat, setsort }) {
     let cat = useParams()
     const [value, setValue] = useState(() => {
+        if(sessionStorage.getItem('cat')){
+            if(sessionStorage.getItem('cat')=='phones')return 1
+            else if (sessionStorage.getItem('cat')=='shoes')return 2
+            else return 3
+        }
         if (cat.category == 'phones') return 1
         else if (cat.category == 'shoes') return 2
         else return 3
