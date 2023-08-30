@@ -189,3 +189,77 @@ transition: all 0.5s;
   }
   
 }
+.add_btn{
+  width: 40px;
+  height: 40px;
+
+  transition: scale 0.5s;
+}
+.add_btn:hover{
+  scale: 1.2;
+}
+.signin{
+  position: absolute;
+  left :1720px;
+}
+.sign_cont{
+  width: 100vw;
+  height: 900px;
+display: flex;
+align-items: center;
+justify-content: center;
+ 
+}
+.form{
+  width: 500px;
+  height: 550px;
+  background-color: blue;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 30px;
+  overflow: hidden; /* Ensures that curved edges are visible */
+  
+}
+.tabs{
+  border-radius: 30px 30px 0 0;
+  background-color: grey ;
+  color: black;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.tabs table{
+  height: 60px;
+  width: 100%;
+  text-align: center;
+  border-radius: 30px;
+  
+}
+.tabs td{
+  border: 1px solid black;
+  border-radius: 30px;
+  width: 200px;
+}
+.tabs {
+  border-collapse: separate;
+  border-spacing: 5px;
+  width: 100%; /* Adjust as needed */
+}
+
+.tabs td {
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 10px; /* 
+
+}
+
+.tabs{
+  border: 1px solid black;
+  border-radius: 30px 30px 0 0;
+  overflow: hidden; /* Ensures that curved edges are visible */
+}

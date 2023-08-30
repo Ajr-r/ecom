@@ -1,19 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { Nav_bar } from "./home.jsx";
-import "./assets/CSS/market.css"
 import Pagination from 'react-bootstrap/Pagination';
 import axios from "axios";
-import {Product_description} from './product_desc.jsx'
+import { Product_description } from './product_desc.jsx'
+
+
 function Category({ setcat, setsort }) {
     let cat = useParams()
     const [value, setValue] = useState(() => {
-        if(sessionStorage.getItem('cat')){
-            if(sessionStorage.getItem('cat')=='phones')return 1
-            else if (sessionStorage.getItem('cat')=='shoes')return 2
+        if (sessionStorage.getItem('cat')) {
+            if (sessionStorage.getItem('cat') == 'phones') return 1
+            else if (sessionStorage.getItem('cat') == 'shoes') return 2
             else return 3
         }
         if (cat.category == 'phones') return 1
@@ -23,17 +23,17 @@ function Category({ setcat, setsort }) {
     const [category, setcategory] = useState(cat.category);
 
     const handleChange = (val, e) => {
-        let str=''
-        if (e.target.value == 1) str='phones'
-        else if (e.target.value == 2) str='shoes' 
-        else str='tshirts'
+        let str = ''
+        if (e.target.value == 1) str = 'phones'
+        else if (e.target.value == 2) str = 'shoes'
+        else str = 'tshirts'
         setcat(str)
-        sessionStorage.setItem('cat',str)
+        sessionStorage.setItem('cat', str)
         setValue(val)
     };
     function sort(e) {
         setsort(e.target.value)
-        sessionStorage.setItem('sort',e.target.value)
+        sessionStorage.setItem('sort', e.target.value)
     }
     return (
         <div>
@@ -74,7 +74,7 @@ function Category({ setcat, setsort }) {
                     <option value="aa"> Alphbetically A-z </option>
                     <option value="az"> Alphbetically Z-a </option>
                 </select>
-             
+
             </div>
         </div>
     )
@@ -85,8 +85,8 @@ function Pagin({ page, maxcount, setpage }) {
     useEffect(() => setactive(page), [page])
     function changepage(number) {
         setpage(number)
-        console.log(number,"dsds")
-        sessionStorage.setItem('page',number)
+        console.log(number, "dsds")
+        sessionStorage.setItem('page', number)
         // setactive(number)
 
     }    // const [ini_fetch,set_set]
@@ -108,9 +108,9 @@ function Pagin({ page, maxcount, setpage }) {
     );
 }
 
-function Product_card({ name, price, rating,setview,setitem,id}) {
-   
-    function click(){
+function Product_card({ name, price, rating, setview, setitem, id }) {
+
+    function click() {
         setview(true)
         setitem(id)
     }
@@ -123,9 +123,9 @@ function Product_card({ name, price, rating,setview,setitem,id}) {
         </div>
     </div>
 }
-function Product({setview,setitem}) {
+function Product({ setview, setitem }) {
     const params = useParams()
-    
+
     const [data, setdata] = useState([])
     const [rawdata, setrawdata] = useState([])
     const [page, setpage] = useState(1)
@@ -162,64 +162,64 @@ function Product({setview,setitem}) {
 
 
     }
-    function sort_data(data){
-        let arr =[...data]
+    function sort_data(data) {
+        let arr = [...data]
 
-        if (sort[0]=='p') {
+        if (sort[0] == 'p') {
             arr.sort((a, b) => {
                 const priceA = parseInt(a.price.slice(1)); // Convert ₹1200 to 1200
                 const priceB = parseInt(b.price.slice(1));
-                return (sort=='ph'?priceB - priceA:priceA - priceB);
+                return (sort == 'ph' ? priceB - priceA : priceA - priceB);
             })
         }
-        else if(sort[0]=='a'){
-                        arr.sort((a, b) => {
-
-                            
-                   if(sort=='aa')return a.name[0].localeCompare(b.name[0])
-                      else return b.name[0].localeCompare(a.name[0]) 
-            })
-        }
-        else{
+        else if (sort[0] == 'a') {
             arr.sort((a, b) => {
-              
-                return (sort=='rh'?b.rating - a.rating:a.rating - b.rating);
+
+
+                if (sort == 'aa') return a.name[0].localeCompare(b.name[0])
+                else return b.name[0].localeCompare(a.name[0])
             })
-            
+        }
+        else {
+            arr.sort((a, b) => {
+
+                return (sort == 'rh' ? b.rating - a.rating : a.rating - b.rating);
+            })
+
         }
         return arr;
 
     }
     function fetch_data() {
-        if(sessionStorage.getItem('page')){
+        if (sessionStorage.getItem('page')) {
             setpage(sessionStorage.getItem('page'))
         }
-        if(sessionStorage.getItem('cat')){
+        if (sessionStorage.getItem('cat')) {
             setcat(sessionStorage.getItem('cat'))
-            
+
         }
-        if(sessionStorage.getItem('sort')){
+        if (sessionStorage.getItem('sort')) {
             setsort(sessionStorage.getItem('sort'))
-            
+
         }
 
 
 
-        if(!fetched || prev_cat!=cat){
+        if (!fetched || prev_cat != cat) {
             axios.get(`http://localhost:3000/data/${cat}`)
-            .then((r) => {
-                setrawdata(r.data)
-                let sorted_data=sort_data(r.data)
-                let binnned_data = bin(sorted_data)
-                setbin(binnned_data)
-                setdata(binnned_data[page])
-                setfetched(!fetched)
-                setprev_cat(cat)
-            })
+                .then((r) => {
+                    setrawdata(r.data)
+                    let sorted_data = sort_data(r.data)
+                    let binnned_data = bin(sorted_data)
+                    setbin(binnned_data)
+                    setdata(binnned_data[page])
+                    setfetched(!fetched)
+                    setprev_cat(cat)
+                })
         }
-        else{
-            console.log("dsd",page)
-            let sorted_data=sort_data(rawdata)
+        else {
+            console.log("dsd", page)
+            let sorted_data = sort_data(rawdata)
             let binnned_data = bin(sorted_data)
             setbin(binnned_data)
             setdata(binnned_data[page])
@@ -227,7 +227,7 @@ function Product({setview,setitem}) {
         }
 
     }
-    useEffect(fetch_data,[page, cat, sort])
+    useEffect(fetch_data, [page, cat, sort])
 
     function changepage(e) {
         if (e.target.className == 'left_triangle') {
@@ -235,14 +235,14 @@ function Product({setview,setitem}) {
 
             else {
                 setpage(page - 1)
-                sessionStorage.setItem('page',parseInt(page)-1)
+                sessionStorage.setItem('page', parseInt(page) - 1)
             }
         }
         else {
             if (page == maxcount) return
             else {
                 setpage(parseInt(page) + 1)
-                sessionStorage.setItem('page',parseInt(page) + 1)
+                sessionStorage.setItem('page', parseInt(page) + 1)
 
             }
         }
@@ -260,10 +260,10 @@ function Product({setview,setitem}) {
             <div className="card_cont">
 
                 {data.map(e => {
-                   
+
                     return (
 
-                        <Product_card name={e.name} price={e.price} rating={e.rating} key={e.id} setview={setview} setitem={setitem} id={e.id}/>
+                        <Product_card name={e.name} price={e.price} rating={e.rating} key={e.id} setview={setview} setitem={setitem} id={e.id} />
                     )
 
                 })}
@@ -277,13 +277,13 @@ function Product({setview,setitem}) {
     )
 }
 export function Market() {
-    const [view,setview]=useState(false)
-    const [item,setitem]=useState('')
+    const [view, setview] = useState(false)
+    const [item, setitem] = useState('')
 
     return (
         <div>
             <Nav_bar phone={false} shoe={false} tshirt={false} home={true} widths={"1900px"} />
-            {view?<Product_description setview={setview} item={item}/>:<Product setview={setview}setitem={setitem} />}
+            {view ? <Product_description setview={setview} item={item} /> : <Product setview={setview} setitem={setitem} />}
         </div>
 
 

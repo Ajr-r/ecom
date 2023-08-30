@@ -1,20 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from "react";
-import axios from "axios";
 import Carousel from 'react-bootstrap/Carousel';
-import './assets/CSS/home.css'
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 import cartsvg from "./assets/cart.svg";
 
 
-export function Nav_bar({phone,shoe,tshirt,home,widths}) {
+export function Nav_bar({phone,shoe,tshirt,home,widths,search}) {
     let [ph, setph] = useState("Search")
     let [idx, setidx] = useState(0)
 
@@ -49,7 +42,9 @@ export function Nav_bar({phone,shoe,tshirt,home,widths}) {
                         {tshirt&&<Link to="market/tshirts" className="links">T-shirts</Link>}
                     </Nav>
                 </Navbar.Collapse>
-                <input type="text" className="search" placeholder={ph} />
+                
+               {search&& <input type="text" className="search" placeholder={ph} />}
+                        <Link to="signin" className="links signin" >Sign-in</Link>
                 <img className="cartsvg"src={cartsvg} alt="" />
             </Container>
         </Navbar>
@@ -60,7 +55,9 @@ Nav_bar.defaultProps={
     shoe:true,
     tshirt:true,
     home:false,
-    widths:"1885px"
+    widths:"1885px",
+    search:true
+
 
 
 }

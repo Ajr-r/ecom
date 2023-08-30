@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ramsvg from "./assets/phonesvgs/ram.svg";
 import procsvg from "./assets/phonesvgs/comp_proc.svg";
-
 import battsvg from "./assets/phonesvgs/battery.svg";
 import hddsvg from "./assets/phonesvgs/hdd.svg";
-
 import weightsvg from "./assets/phonesvgs/weight.svg";
 import sizesvg from "./assets/phonesvgs/size.svg";
 import backsvg from "./assets/back.svg"
@@ -91,7 +89,7 @@ export function Product_description({ setview, item }) {
             {fetched && (
                 <div style={{ marginLeft: "40px", marginTop: "20px" }}>
                     <DismissibleExample toast={toast} settoast={settoast} name={data[item].name}/>
-                    <h2>{data[item].name} &nbsp; &nbsp;<img onClick={()=>settoast(true)} style={{width:"40px",height:"40px"}} src={addsvg} alt="" /></h2>
+                    <h2>{data[item].name} &nbsp; &nbsp;<img className="add_btn"onClick={()=>settoast(true)}  src={addsvg} alt="" /></h2>
                     <br />
                     <p>{data[item].price}</p>
                     <p style={{ width: "500px" }}>{data[item].desc}</p>
