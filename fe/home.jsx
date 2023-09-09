@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import cartsvg from "./assets/cart.svg";
 
 
-export function Nav_bar({phone,shoe,tshirt,home,widths,search}) {
+export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
     let [ph, setph] = useState("Search")
     let [idx, setidx] = useState(0)
 
@@ -44,7 +44,7 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search}) {
                 </Navbar.Collapse>
                 
                {search&& <input type="text" className="search" placeholder={ph} />}
-                        <Link to="signin" className="links signin" >Sign-in</Link>
+                        {signin&&<Link to="signin" className="links signin" >Sign-in</Link>}
                 <img className="cartsvg"src={cartsvg} alt="" />
             </Container>
         </Navbar>
@@ -56,7 +56,8 @@ Nav_bar.defaultProps={
     tshirt:true,
     home:false,
     widths:"1885px",
-    search:true
+    search:true,
+    signin:true
 
 
 

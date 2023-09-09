@@ -282,7 +282,7 @@ export function Market() {
 
     return (
         <div>
-            <Nav_bar phone={false} shoe={false} tshirt={false} home={true} widths={"1900px"} />
+            <Nav_bar phone={false} shoe={false} tshirt={false} home={true} widths={"1900px"} signin={false}/>
             {view ? <Product_description setview={setview} item={item} /> : <Product setview={setview} setitem={setitem} />}
         </div>
 

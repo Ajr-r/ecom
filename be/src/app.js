@@ -5,6 +5,16 @@ const cors = require('cors');
 const path =require('path')
 const compress=require('compression');
 const compression = require('compression');
+userdata=[
+  {
+  fname:'dio',
+  lname:'brando',
+  uname:'dio',
+  pass:'123',
+  id:"u1"
+}
+
+]
 app.use(cors({
   origin: '*',
   optionsSuccessStatus: 200,
@@ -17,12 +27,19 @@ app.use(compression({
     return compress.filter(req,res)
   }
 }))
+app.use(exp.json())
 app.get('/data/:category',(req,res)=>{
   res.header('Cache-Control', 'public, max-age=3600'); 
   if(req.params.category=="phones")res.send(phonesdata)
   else if(req.params.category=="shoes")res.send(shoesdata)
   else if(req.params.category=="desc")res.send(proddata)
   else res.send(tshirtsdata)
+})
+app.post('/authenticate',(req,res)=>{
+  if(req.body.type=="signin"){
+    // if(req.body.pass)
+  }
+  
 })
 
 
