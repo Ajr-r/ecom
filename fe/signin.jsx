@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Nav_bar } from "./home.jsx";
 import axios from "axios";
+import {SHA256} from 'crypto-js'
+import { Testbtn } from "./helpers/testbtn.jsx";
+
 export function Signin() {
     const [type, setype] = useState("signin")
     const [si, setsi] = useState(true)
@@ -30,13 +33,14 @@ export function Signin() {
 
     }
     function submit(e) {
+        let hashpass=SHA256((pa.current.value).toString()).toString()
         console.log(ur.current.value)
         e.preventDefault()
         let data={}
         if(type=="sigin"){
              data={
                 uname:ur.current.value,
-                pass:pa.current.value,
+                pass:hashpass,
                 type:type
 
             }
@@ -44,19 +48,20 @@ export function Signin() {
         else {
              data={
                 uname:ur.current.value,
-                pass:pa.current.value,
+                pass:hashpass,
                 fname:fr.current.value,
                 lname:lr.current.value,
                 type:type
 
             }
         }
-         axios.post("http://localhost:3000/authenticate",data)
+         axios.post("http://localhost:3000/authenticate",data).then((r)=>alert(r.headers["set-cookie"]))
         
     }
 
     return (
         <>
+        <Testbtn/>
             <div style={{ overflow: "hidden" }} >
 
                 <Nav_bar phone={false} shoe={false} tshirt={false} home={true} widths={"1900px"} signin={false} />

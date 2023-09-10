@@ -18,7 +18,6 @@ function DismissibleExample({toast,settoast,name}) {
         settoast(false)
     }
     useEffect(()=>setShowA(toast),[toast])
-    console.log(toast,"in toast")
  
 
     return (
