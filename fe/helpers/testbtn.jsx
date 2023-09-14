@@ -3,8 +3,7 @@ import axios from "axios";
 export function Testbtn(){
     function click(){
         axios.get('http://localhost:3000/test',{
-            withCredentials: true,
-        
+            withCredentials:true
         })
 
     }

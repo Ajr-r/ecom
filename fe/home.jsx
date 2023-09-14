@@ -10,6 +10,7 @@ import cartsvg from "./assets/cart.svg";
 export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
     let [ph, setph] = useState("Search")
     let [idx, setidx] = useState(0)
+    sessionStorage.setItem("name",JSON.stringify({"bruh":"dsd"}))
 
 
     useEffect(() => {
@@ -44,7 +45,7 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
                 </Navbar.Collapse>
                 
                {search&& <input type="text" className="search" placeholder={ph} />}
-                        {signin&&<Link to="signin" className="links signin" >Sign-in</Link>}
+                        {!document.cookie&&signin&&<Link to="signin" className="links signin" >Sign-in</Link>}
                 <img className="cartsvg"src={cartsvg} alt="" />
             </Container>
         </Navbar>

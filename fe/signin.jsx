@@ -3,6 +3,7 @@ import { Nav_bar } from "./home.jsx";
 import axios from "axios";
 import {SHA256} from 'crypto-js'
 import { Testbtn } from "./helpers/testbtn.jsx";
+import { useNavigate } from "react-router";
 
 export function Signin() {
     const [type, setype] = useState("signin")
@@ -13,6 +14,7 @@ export function Signin() {
     const pa=useRef('')
     const fr=useRef('')
     const lr=useRef('')
+    const nav=useNavigate()
 
     function changtyp(e) {
         setype(e.target.value)
@@ -55,7 +57,22 @@ export function Signin() {
 
             }
         }
-         axios.post("http://localhost:3000/authenticate",data).then((r)=>alert(r.headers["set-cookie"]))
+         axios.post("http://localhost:3000/authenticate",data).then((r)=>{
+            if(r.data.status=='success'){
+                console.log(r.data.cookie)
+                axios.get("http://localhost:3000/setcookie/signin",{
+                    withCredentials:true,
+                }).then(
+                    ()=>alert("signed in")
+                ).then(()=>{
+                    nav("/")
+                })
+                
+            }
+            else{
+                alert(r.data)
+            }
+         })
         
     }
 
