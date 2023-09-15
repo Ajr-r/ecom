@@ -300,3 +300,17 @@ justify-content: center;
   animation: opaci 1s forwards;
   
 }
+.badger{
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 1830px;
+  top: 20px;
+  width: 16px;
+  height: 16px;
+  background-color: yellow;
+  display: flex;
+  border-radius: 50%;
+}

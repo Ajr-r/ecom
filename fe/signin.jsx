@@ -65,6 +65,8 @@ export function Signin() {
                 }).then(
                     ()=>alert("signed in")
                 ).then(()=>{
+    sessionStorage.setItem("cartitems",0)   
+                
                     nav("/")
                 })
                 

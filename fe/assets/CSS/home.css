@@ -25,6 +25,7 @@ border-radius: 30px;
     width: 30px;
     height: 30px;
     left:1800px;
+    top: 13px;
     filter: invert(100%) sepia(30%) saturate(0%) hue-rotate(121deg) brightness(102%) contrast(101%);
    
 }

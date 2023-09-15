@@ -10,6 +10,7 @@ import axios from "axios";
 import addsvg from "./assets/add.svg"
 import Col from 'react-bootstrap/Col';
 import Toast from 'react-bootstrap/Toast';
+import { useNavigate } from "react-router";
 
 function DismissibleExample({toast,settoast,name}) {
     const [showA, setShowA] = useState();
@@ -43,7 +44,8 @@ function DismissibleExample({toast,settoast,name}) {
   }
 
 export function Product_description({ setview, item }) {
-
+    const nav=useNavigate()
+    
     const [data, setdata] = useState([])
     const [s,sets]=useState(false)
     const [p,setp]=useState(false)
@@ -69,7 +71,48 @@ export function Product_description({ setview, item }) {
         setview(false)
 
     }
-    console.log(toast)
+    function addtocart(){
+        if(!document.cookie.toString().includes("id"))nav("signin")
+        settoast(true)
+        
+        if(!sessionStorage.getItem("items")){
+            alert("dsds")
+           let items={
+                [item]:{
+                    qty:1,
+                    price:data[item].price
+                }         
+            }
+            sessionStorage.setItem("items",JSON.stringify(items))
+            sessionStorage.setItem("cartitems",Number(sessionStorage.getItem("cartitems"))+1)
+        
+        }else{
+            
+            let i=JSON.parse(sessionStorage.getItem("items"))
+            if(!i[item]){
+              
+                    let items={
+                        qty:1,
+                        price:data[item].price
+                    }         
+                
+                i[item]=items
+                sessionStorage.setItem("items",JSON.stringify(i)) 
+                sessionStorage.setItem("cartitems",Number(sessionStorage.getItem("cartitems"))+1) 
+
+            }
+            else{
+
+                i[item].qty=i[item].qty+1
+                sessionStorage.setItem("items",JSON.stringify(i)) 
+                sessionStorage.setItem("cartitems",Number(sessionStorage.getItem("cartitems"))+1)
+            }
+
+        }
+            
+    
+    }
+
     return (
         <div className="descp">
             
@@ -88,7 +131,11 @@ export function Product_description({ setview, item }) {
             {fetched && (
                 <div style={{ marginLeft: "40px", marginTop: "20px" }}>
                     <DismissibleExample toast={toast} settoast={settoast} name={data[item].name}/>
-                    <h2>{data[item].name} &nbsp; &nbsp;<img className="add_btn"onClick={()=>settoast(true)}  src={addsvg} alt="" /></h2>
+                    <h2>{data[item].name} &nbsp; &nbsp;<img className="add_btn"onClick={()=>{
+                        
+                        addtocart()
+                    }
+                    }  src={addsvg} alt="" /></h2>
                     <br />
                     <p>{data[item].price}</p>
                     <p style={{ width: "500px" }}>{data[item].desc}</p>

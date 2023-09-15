@@ -1,4 +1,5 @@
 import React, { useEffect,useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,10 +8,11 @@ import { Link } from "react-router-dom";
 import cartsvg from "./assets/cart.svg";
 
 
+
 export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
     let [ph, setph] = useState("Search")
     let [idx, setidx] = useState(0)
-    sessionStorage.setItem("name",JSON.stringify({"bruh":"dsd"}))
+    const nav=useNavigate()
 
 
     useEffect(() => {
@@ -46,7 +48,12 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
                 
                {search&& <input type="text" className="search" placeholder={ph} />}
                         {!document.cookie&&signin&&<Link to="signin" className="links signin" >Sign-in</Link>}
-                <img className="cartsvg"src={cartsvg} alt="" />
+            
+
+
+                <img className="cartsvg" onClick={()=>nav("checkout")} src={cartsvg} alt="" />
+                <div className="badger" >{sessionStorage.getItem("cartitems")}</div>
+                  
             </Container>
         </Navbar>
     );
@@ -63,7 +70,6 @@ Nav_bar.defaultProps={
 
 
 }
-
 function Offers() {
     return (
         <Carousel style={{ backgroundColor: "white", width: "1400px", marginTop: "60px", borderRadius: "20px" }}  >
@@ -138,9 +144,6 @@ function Footer_home() {
     )
 }
 export function Home() {
-    useEffect(()=>{
-        sessionStorage.clear()
-    },[])
     return (
         <>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", overflow: "hidden" }}>

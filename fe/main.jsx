@@ -4,6 +4,7 @@ import { BrowserRouter,Route,Routes } from "react-router-dom";
 import {Home} from "./home.jsx"
 import { Market } from "./market.jsx";
 import { Signin } from "./signin.jsx";
+import { Checkout } from "./checkout.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/CSS/home.css'
 import "./assets/CSS/market.css"
@@ -23,6 +24,7 @@ root.render(
     <Route path="/*" element={<Home/>}/>
     <Route path="signin" element={<Signin/>}/>
     <Route path="market/:category" element={<Market/>}/>
+    <Route path="checkout" element={<Checkout/>}/>
 
 </Routes>
 

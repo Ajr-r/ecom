@@ -22,16 +22,16 @@ userdata = [
 ]
 let sessiondata = [
   {
-    "sessionid":{
-      userid:"u1",
-      logintime:31231,
-      cart:["product 1","product 2"]
+    "sessionid": {
+      userid: "u1",
+      logintime: 31231,
+      cart: ["product 1", "product 2"]
     }
   }
 
 ]
-let cookiearr=[]
-const date=new Date( )
+let cookiearr = []
+const date = new Date()
 console.log(date)
 app.use(cors({
   origin: 'http://localhost:8080'
@@ -52,12 +52,12 @@ app.get('/data/:category', (req, res) => {
   else if (req.params.category == "desc") res.send(proddata)
   else res.send(tshirtsdata)
 })
-app.get('/setcookie/signin',(req,res)=>{
+app.get('/setcookie/signin', (req, res) => {
   // res.cookie("id")
   // res.header('Access-Control-Allow-Credentials',true)
   // res.send()
-  res.cookie("id",cookiearr.pop())
-  res.header('Access-Control-Allow-Credentials',true)
+  res.cookie("id", cookiearr.pop())
+  res.header('Access-Control-Allow-Credentials', true)
   res.send()
 })
 app.get('/test', (req, res) => {
@@ -72,13 +72,13 @@ app.post('/authenticate', (req, res) => {
     userdata.forEach(element => {
       if (element.uname == req.body.uname) {
         console.log(req.body.pass)
-        if (element.pass == req.body.pass) { 
-          cookiearr.push(SHA256(req.body.uname).toString().slice(0,8))
+        if (element.pass == req.body.pass) {
+          cookiearr.push(SHA256(req.body.uname).toString().slice(0, 8))
           sessiondata.push({
-              [SHA256(req.body.uname).toString().slice(0,8)]:{
-                userid:element.id,
-                logintime:Date.now().toString(),
-                cart:[]
+            [SHA256(req.body.uname).toString().slice(0, 8)]: {
+              userid: element.id,
+              logintime: Date.now().toString(),
+              cart: []
             }
           })
           // {
@@ -89,13 +89,13 @@ app.post('/authenticate', (req, res) => {
           //   }
           // }
           res.send({
-            status:"success",
+            status: "success",
           }); //Sets name = express
         }
         else {
           console.log("nope")
           res.send({
-            status:"wrong pass",
+            status: "wrong pass",
           })
 
         }
@@ -103,7 +103,7 @@ app.post('/authenticate', (req, res) => {
       else {
         console.log("no user found")
         res.send({
-          status:"No username",
+          status: "No username",
         })
       }
 

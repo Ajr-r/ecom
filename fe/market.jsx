@@ -79,6 +79,7 @@ function Category({ setcat, setsort }) {
         </div>
     )
 }
+
 function Pagin({ page, maxcount, setpage }) {
     let [active, setactive] = useState(1);
     let items = [];
