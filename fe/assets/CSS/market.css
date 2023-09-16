@@ -301,16 +301,30 @@ justify-content: center;
   
 }
 .badger{
+  position: absolute;
   font-size: 0.9rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  left: 1830px;
-  top: 20px;
+  left: 1820px;
+  top: 6px;
   width: 16px;
   height: 16px;
   background-color: yellow;
   display: flex;
   border-radius: 50%;
+}
+.check_cont{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  background-color: #5F63B0;
+  width: 800px;
+  height: 800px;
+}
+.check_cont td{
+  width: 50px;
+  text-align: center;
+  background-color: #D9D9D9;
 }

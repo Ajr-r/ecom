@@ -32,7 +32,7 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
 
         <Navbar expand="lg" bg="dark" sticky="top" style={{ height: "52px", borderRadius: "7px", marginTop: "10px", width: widths, marginLeft: "auto", marginRight: "auto", backgroundColor: "green" }} className="bg-body-tertiary nav" data-bs-theme="dark">
             <Container style={{ marginLeft: "0px", width: "1000px" }}>
-                <Navbar.Brand href="#home" style={{ fontSize: "1.5rem" }}>ecom</Navbar.Brand>
+                <Navbar.Brand href="#home" style={{ fontSize: "1.5rem" }}>bareedasdan</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" style={{ minWidth: "70px" }}>
                     <Nav className="me-auto">

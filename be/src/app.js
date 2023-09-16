@@ -30,11 +30,14 @@ let sessiondata = [
   }
 
 ]
+let orderdetails=[
+  {"uid":[]},
+]
 let cookiearr = []
 const date = new Date()
 console.log(date)
 app.use(cors({
-  origin: 'http://localhost:8080'
+  origin: ['http://localhost:8080',]
 }));
 app.use(compression({
   level: 9,
@@ -60,8 +63,22 @@ app.get('/setcookie/signin', (req, res) => {
   res.header('Access-Control-Allow-Credentials', true)
   res.send()
 })
-app.get('/test', (req, res) => {
+app.options('test',cors())
+app.post('/test', (req, res) => {
+  console.log(req.body)
   console.log(req.cookies)
+  res.header('Access-Control-Allow-Credentials', true)
+  
+  res.send()
+})
+
+app.post("/order",(req,res)=>{
+  console.log(req.cookies)
+  console.log(req.body)
+  console.log(sessiondata)
+  // orderdetails[req.cookies]
+  res.send()
+  
 })
 
 app.post('/authenticate', (req, res) => {
@@ -118,7 +135,7 @@ console.log(SHA256('123').toString())
 //   res.sendFile('/home/arjith/web_dev/proj/ecom/fe/dist_prod/index.html')
 // })
 
-app.use(exp.static(path.join(__dirname, '../../fe/dist_prod')));
+app.use(exp.static(path.join(__dirname, '../../fe/dist_dev')));
 app.listen(3000, () => {
   console.log('server started')
 })

@@ -55,11 +55,12 @@ module.exports = {
             },
         ]
     },
-    devServer: {//for dev server
-        static: {
-          directory: path.resolve(__dirname, 'dist_dev'), // Replace 'public' with your static files directory
-        },
-        historyApiFallback: true,
-        hot: true,
-      },
+    watch:true
+    // devServer: {//for dev server
+    //     static: {
+    //       directory: path.resolve(__dirname, 'dist_dev'), // Replace 'public' with your static files directory
+    //     },
+    //     historyApiFallback: true,
+    //     hot: true,
+    //   },
 };

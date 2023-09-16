@@ -72,7 +72,10 @@ export function Product_description({ setview, item }) {
 
     }
     function addtocart(){
-        if(!document.cookie.toString().includes("id"))nav("signin")
+        if(!document.cookie.toString().includes("id")){
+            nav("../signin")
+            return
+        }
         settoast(true)
         
         if(!sessionStorage.getItem("items")){

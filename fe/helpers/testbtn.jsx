@@ -1,9 +1,18 @@
 import React from "react";
 import axios from "axios";
+import { json } from "react-router";
 export function Testbtn(){
     function click(){
-        axios.get('http://localhost:3000/test',{
-            withCredentials:true
+        fetch('http://localhost:3000/test',{
+          method:"post",
+          mode:"cors",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body:JSON.stringify({name:"arjith"})
+
         })
 
     }
