@@ -1,14 +1,27 @@
 let { phonesdata, shoesdata, tshirtsdata, proddata } = require('./data')
 const exp = require('express')
 const app = exp()
+require('dotenv').config();
 const cors = require('cors');
 const path = require('path')
 const compress = require('compression');
 const compression = require('compression');
 const { SHA256 } = require('crypto-js')
 const cookieParser = require('cookie-parser');
-const { timeStamp } = require('console');
 app.use(cookieParser());
+
+console.log(process.env.NGINX_PASS)
+function nginxcheck(req,res,next){
+  console.log("ngin")
+  console.log(req.headers['x-my-auth-token'])
+  if(req.headers['x-my-auth-token']===process.env.NGINX_PASS) next();
+  else{
+
+    res.status(401)
+    res.end()
+  }
+}
+app.use(nginxcheck)
 userdata = [
   {
     fname: 'dio',
@@ -31,14 +44,12 @@ let sessiondata = [
 
 ]
 let orderdetails=[
-  {"uid":[]},
+  {"uid":{}},
 ]
 let cookiearr = []
 const date = new Date()
 console.log(date)
-app.use(cors({
-  origin: ['http://localhost:8080',]
-}));
+
 app.use(compression({
   level: 9,
   threshold: 100,
@@ -48,40 +59,31 @@ app.use(compression({
   }
 }))
 app.use(exp.json())
-app.get('/data/:category', (req, res) => {
+app.get('/api/data/:category', (req, res) => {
   res.header('Cache-Control', 'public, max-age=3600');
   if (req.params.category == "phones") res.send(phonesdata)
   else if (req.params.category == "shoes") res.send(shoesdata)
   else if (req.params.category == "desc") res.send(proddata)
   else res.send(tshirtsdata)
 })
-app.get('/setcookie/signin', (req, res) => {
-  // res.cookie("id")
-  // res.header('Access-Control-Allow-Credentials',true)
-  // res.send()
-  res.cookie("id", cookiearr.pop())
-  res.header('Access-Control-Allow-Credentials', true)
-  res.send()
-})
-app.options('test',cors())
-app.post('/test', (req, res) => {
-  console.log(req.body)
-  console.log(req.cookies)
-  res.header('Access-Control-Allow-Credentials', true)
-  
-  res.send()
+app.post('/api/test', (req, res) => {
+  req.headers['x-my-auth-token']
+  res.send("gg bois")
 })
 
-app.post("/order",(req,res)=>{
-  console.log(req.cookies)
-  console.log(req.body)
-  console.log(sessiondata)
-  // orderdetails[req.cookies]
-  res.send()
+app.post("/api/order",(req,res)=>{
+  //$$$$$$$placeholder to add a check to verify cookies not doing this cos no db is set up
+  let orederdata={
+    [req.cookies.id]:req.body
+  }
+  orderdetails.push(orederdata)
+  console.log(orderdetails)
+  console.log(orderdetails[1])
+  res.send("ok")
   
 })
 
-app.post('/authenticate', (req, res) => {
+app.post('/api/authenticate', (req, res) => {
   console.log(req.body.type)
   if (req.body.type == "signin") {
 
@@ -90,7 +92,7 @@ app.post('/authenticate', (req, res) => {
       if (element.uname == req.body.uname) {
         console.log(req.body.pass)
         if (element.pass == req.body.pass) {
-          cookiearr.push(SHA256(req.body.uname).toString().slice(0, 8))
+          res.cookie("id",SHA256(req.body.uname).toString().slice(0, 8))
           sessiondata.push({
             [SHA256(req.body.uname).toString().slice(0, 8)]: {
               userid: element.id,
@@ -134,6 +136,11 @@ console.log(SHA256('123').toString())
 // app.get('*',(req,res)=>{
 //   res.sendFile('/home/arjith/web_dev/proj/ecom/fe/dist_prod/index.html')
 // })
+app.get("/api/rt",(req,res)=>{
+  console.log(req)
+  res.send("heddssDASDADASssllo")
+})
+
 
 app.use(exp.static(path.join(__dirname, '../../fe/dist_dev')));
 app.listen(3000, () => {

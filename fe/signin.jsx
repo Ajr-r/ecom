@@ -57,22 +57,15 @@ export function Signin() {
 
             }
         }
-         axios.post("http://localhost:3000/authenticate",data).then((r)=>{
+         axios.post("http://localhost:80/api/authenticate",data).then((r)=>{
             if(r.data.status=='success'){
                 console.log(r.data.cookie)
-                axios.get("http://localhost:3000/setcookie/signin",{
-                    withCredentials:true,
-                }).then(
-                    ()=>alert("signed in")
-                ).then(()=>{
-    sessionStorage.setItem("cartitems",0)   
-                
-                    nav("/")
-                })
-                
+                   alert("signed in")
+                    sessionStorage.setItem("cartitems",0)   
+                    nav("/")   
             }
             else{
-                alert(r.data)
+                alert(r.data.status)
             }
          })
         

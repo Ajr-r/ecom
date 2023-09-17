@@ -207,7 +207,7 @@ function Product({ setview, setitem }) {
 
 
         if (!fetched || prev_cat != cat) {
-            axios.get(`http://localhost:3000/data/${cat}`)
+            axios.get(`http://localhost:80/api/data/${cat}`)
                 .then((r) => {
                     setrawdata(r.data)
                     let sorted_data = sort_data(r.data)

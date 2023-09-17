@@ -59,7 +59,7 @@ export function Product_description({ setview, item }) {
     
     const [fetched, setfetched] = useState(false)
     useEffect(() => {
-        axios.get(`http://localhost:3000/data/desc`)
+        axios.get(`http://localhost:80/api/data/desc`)
             .then((r) => {
                 // let y=r.data
                 // console.log(y[item].name)

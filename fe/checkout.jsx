@@ -45,10 +45,17 @@ export function Checkout() {
 
     }
     function sendorder(){       
-        axios.post("http://localhost:3000/order",data,{
-            withCredentials:true
-        }).then(()=>{
+        axios.post("http://localhost:80/api/order",data,{
+        }).then((r)=>{
+            console.log(r.data)
+           if(r.data=="ok"){
             alert("order placed")
+            sessionStorage.clear()
+            nav("/")
+           } 
+           else{
+            alert(r.data)
+           }
         })
     }
     console.log(tp)
