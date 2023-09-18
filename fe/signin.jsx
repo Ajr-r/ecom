@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { Nav_bar } from "./home.jsx";
 import axios from "axios";
 import {SHA256} from 'crypto-js'
-import { Testbtn } from "./helpers/testbtn.jsx";
 import { useNavigate } from "react-router";
 
 export function Signin() {
@@ -73,10 +72,9 @@ export function Signin() {
 
     return (
         <>
-        <Testbtn/>
             <div style={{ overflow: "hidden" }} >
 
-                <Nav_bar phone={false} shoe={false} tshirt={false} home={true} widths={"1900px"} signin={false} />
+                <Nav_bar phone={false} shoe={false} tshirt={false} home={true} widths={"1900px"} signin={false} cart={false}/>
                 <div className={`sign_cont`}>
                     <form action="">
 

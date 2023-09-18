@@ -76,3 +76,28 @@ z-index: -10;
    
 
 }
+.check_cont table{
+    margin: 40px;
+    border: 1px solid black;
+
+}
+.check_cont tr{
+    height: 70px;
+    
+}
+.check_cont{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  background-color: #5F63B0;
+  width: 800px;
+  height: 800px;
+  border-radius: 50px;
+}
+.check_cont td{
+    width: 100px !important;
+    text-align: center;
+    background-color: #D9D9D9;
+    padding: 5px;
+}

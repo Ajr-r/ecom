@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Testbtn } from "./helpers/testbtn.jsx";
 export function Checkout() {
     const [data, setdata] = useState({})
     const [loaded, setloaded] = useState(false)
@@ -11,6 +10,7 @@ export function Checkout() {
     useEffect(() => {
         let d = JSON.parse(sessionStorage.getItem("items"))
         setdata(d)
+        
         setloaded(true)
         settp(()=>{
             return (Object.keys(d).reduce((accum,key)=>{
@@ -19,6 +19,7 @@ export function Checkout() {
         })
         
     }, [chng])
+  
     function changeqty(e){
         console.log(e.target.getAttribute('data'))
         let i=e.target.getAttribute('data')
@@ -64,8 +65,9 @@ export function Checkout() {
             <button style={{position:"fixed"}} onClick={()=>nav("/")}>home</button>
             <div className="check_cont">
 
-                <h3 style={{margin:"20px`"}}>ORDER SUMMARY</h3>
-                {loaded ?
+                <h3 style={{margin:"40px"}}>ORDER SUMMARY</h3>
+                {loaded && sessionStorage.getItem("cartitems")!=0?
+                <>
                     <table>
                         <tbody>
                             
@@ -76,12 +78,10 @@ export function Checkout() {
                                 <td>X</td>
                                 <td>
                                     <button onClick={changeqty} value={"-"} data={key}>-</button>
-                                    </td>
-                                <td>{data[key].qty}</td>
-                                <td>
-
+                                    {data[key].qty}
                                 <button onClick={changeqty} value={"+"} data={key}>+</button>
-                                </td>
+                                    </td>
+
                                 <td>{data[key].price}</td>
                             </tr>
                         })}
@@ -89,14 +89,17 @@ export function Checkout() {
                             <td>Total</td>
                             <td></td>
                             <td></td>
+                            <td></td>
+                            <td></td>
                             <td>{tp}</td>
                         </tr>
                         </tbody>
-                        <button onClick={sendorder}>Place order</button>
                     </table>
-                    : <h1>Cart is empty</h1>}
+                        <button onClick={sendorder}>Place order</button>
+                        </>
+                    : <h1>Cart is empty</h1>
+                    }
             </div>
-            <Testbtn/>
         </div>
     )
 }

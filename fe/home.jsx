@@ -6,12 +6,17 @@ import Navbar from 'react-bootstrap/Navbar';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from "react-router-dom";
 import cartsvg from "./assets/cart.svg";
+import { Modal_cust } from "./ui_comp/model.jsx";
 
 
-export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
+
+export function Nav_bar({phone,shoe,tshirt,home,widths,search,cart,logout}) {
+    let [signin,setsignin]=useState(true)
     let [ph, setph] = useState("Search")
     let [idx, setidx] = useState(0)
+    const [badgenum,setbadenum]=useState(sessionStorage.getItem("cartitems"))
     const nav=useNavigate()
+    const [show,setshow]=useState(false)
 
 
     useEffect(() => {
@@ -27,6 +32,23 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
         setph(s[idx]);
 
     }, [idx]);
+    useEffect(()=>{
+        if(!sessionStorage.getItem("cartitems"))sessionStorage.setItem("cartitems",0)
+        else setbadenum(sessionStorage.getItem("cartitems"))
+    })
+    function navcheckout(e){
+
+        if(!document.cookie.includes("id")){
+            setshow(true)
+            return
+        }
+        else nav("/checkout")
+    }
+    useEffect(()=>{
+        if(document.cookie.includes("id")){
+            setsignin(false)
+        }
+    },[])
     return (
 
         <Navbar expand="lg" bg="dark" sticky="top" style={{ height: "52px", borderRadius: "7px", marginTop: "10px", width: widths, marginLeft: "auto", marginRight: "auto", backgroundColor: "green" }} className="bg-body-tertiary nav" data-bs-theme="dark">
@@ -46,14 +68,20 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search,signin}) {
                 </Navbar.Collapse>
                 
                {search&& <input type="text" className="search" placeholder={ph} />}
-                        {!document.cookie&&signin&&<Link to="signin" className="links signin" >Sign-in</Link>}
+                        {!document.cookie&&signin?<Link to="signin" className="links signin" >Sign-in</Link>:
+                        logout&&<Link to="signin" className="links signin" >Sign-out</Link>}
             
 
 
-                <img className="cartsvg" onClick={()=>nav("/checkout")} src={cartsvg} alt="" />
-                <div className="badger" >{sessionStorage.getItem("cartitems")}</div>
+               {cart&&
+               <>
+               <img className="cartsvg" onClick={navcheckout} src={cartsvg} alt="" />
+                <div className="badger" >{badgenum}</div>
+               </> 
+               }
                   
             </Container>
+<Modal_cust msg={"please sign-in to view the cart"} show={show} setshow={setshow}/>
         </Navbar>
     );
 }
@@ -64,7 +92,9 @@ Nav_bar.defaultProps={
     home:false,
     widths:"1885px",
     search:true,
-    signin:true
+
+    cart:true,
+    logout:false
 
 
 
@@ -143,6 +173,7 @@ function Footer_home() {
     )
 }
 export function Home() {
+
     return (
         <>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", overflow: "hidden" }}>
@@ -153,6 +184,7 @@ export function Home() {
                 <Delivers />
                 <br />
                 <Footer_home />
+
             </div>
         </>
     )

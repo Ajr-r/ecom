@@ -11,9 +11,10 @@ import addsvg from "./assets/add.svg"
 import Col from 'react-bootstrap/Col';
 import Toast from 'react-bootstrap/Toast';
 import { useNavigate } from "react-router";
+import { Modal_cust } from "./ui_comp/model.jsx";
 
 function DismissibleExample({toast,settoast,name}) {
-    const [showA, setShowA] = useState();
+    const [showA, setShowA] = useState(false);
     const toggleShowA = () =>{ 
         setShowA(!showA);
         settoast(false)
@@ -45,6 +46,7 @@ function DismissibleExample({toast,settoast,name}) {
 
 export function Product_description({ setview, item }) {
     const nav=useNavigate()
+    const [show,setshow]=useState(false)
     
     const [data, setdata] = useState([])
     const [s,sets]=useState(false)
@@ -73,13 +75,12 @@ export function Product_description({ setview, item }) {
     }
     function addtocart(){
         if(!document.cookie.toString().includes("id")){
-            nav("../signin")
+            setshow(true)
             return
         }
         settoast(true)
         
         if(!sessionStorage.getItem("items")){
-            alert("dsds")
            let items={
                 [item]:{
                     qty:1,
@@ -120,6 +121,7 @@ export function Product_description({ setview, item }) {
         <div className="descp">
             
 
+<Modal_cust msg={"please sign-in to add item"} show={show} setshow={setshow}/>
     
             <img className="backbtn" src={backsvg} alt="" onClick={back} />
             <div className="pic_cont" style={{ display: "flex", flexDirection: "row" }}>
