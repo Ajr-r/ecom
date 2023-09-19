@@ -635,12 +635,16 @@ const proddata = {
   }, 
   
 };
-
+const phonesIdName = phonesdata.map(item => ({ id: item.id, name: item.name }));
+const tshirtsIdName = tshirtsdata.map(item => ({ id: item.id, name: item.name }));
+const shoesIdName = shoesdata.map(item => ({ id: item.id, name: item.name }));
+let searchdata=[...phonesIdName,...shoesIdName,...tshirtsIdName]
 
    
   module.exports={
     phonesdata,
     shoesdata,
     tshirtsdata,
-    proddata
+    proddata,
+    searchdata
   }

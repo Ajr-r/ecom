@@ -1,4 +1,4 @@
-let { phonesdata, shoesdata, tshirtsdata, proddata } = require('./data')
+let { phonesdata, shoesdata, tshirtsdata, proddata , searchdata} = require('./data')
 const exp = require('express')
 const app = exp()
 require('dotenv').config();
@@ -82,7 +82,13 @@ app.post("/api/order",(req,res)=>{
   res.send("ok")
   
 })
+app.post('/api/signout',(req,res)=>{
+  console.log(req.body)
+  res.clearCookie("id")
+  res.send()
+  
 
+})
 app.post('/api/authenticate', (req, res) => {
   console.log(req.body.type)
   if (req.body.type == "signin") {
@@ -140,7 +146,11 @@ app.get("/api/rt",(req,res)=>{
   console.log(req)
   res.send("heddssDASDADASssllo")
 })
+app.get("/api/search",(req,res)=>{
 
+  res.header('Cache-Control', 'public, max-age=3600');
+  res.send(searchdata)
+})
 
 app.use(exp.static(path.join(__dirname, '../../fe/dist_dev')));
 app.listen(3000, () => {

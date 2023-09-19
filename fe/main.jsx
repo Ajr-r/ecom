@@ -8,14 +8,13 @@ import { Checkout } from "./checkout.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/CSS/home.css'
 import "./assets/CSS/market.css"
-
-function App(){
-    return(
-        <>
-            <h1>Hello world</h1>
-        </>
-    )
-}
+import { createContext } from "react";
+import axios from "axios";
+export let searchdata={}
+axios.get("http://localhost:80/api/search").then((r)=>{
+        
+        searchdata=createContext(r.data)
+})
 
 const root=ReactDOM.createRoot(document.getElementById('root'))
 root.render(

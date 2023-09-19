@@ -3,17 +3,38 @@ import { Nav_bar } from "./home.jsx";
 import axios from "axios";
 import {SHA256} from 'crypto-js'
 import { useNavigate } from "react-router";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+function M_s({show,name,setshow}){
+    
+    const nav=useNavigate()
+    function handleClose(e){
+    nav("/")    
+    }
+    return(
 
+        <Modal show={show}>
+    <Modal.Header >
+      <Modal.Title>Welcome back {name}</Modal.Title>
+    </Modal.Header>
+    <Modal.Footer>
+      <Button value={"sign"} style={{background:"#5F63B0"}} onClick={handleClose}>
+        Close
+      </Button>
+    </Modal.Footer>
+  </Modal>
+)
+}
 export function Signin() {
     const [type, setype] = useState("signin")
     const [si, setsi] = useState(true)
     const [reg, setreg] = useState(false)
     const [cls, setcls] = useState("sign_cont")
+    const [show,setshow]=useState(false)
     const ur=useRef('')
     const pa=useRef('')
     const fr=useRef('')
     const lr=useRef('')
-    const nav=useNavigate()
 
     function changtyp(e) {
         setype(e.target.value)
@@ -59,19 +80,22 @@ export function Signin() {
          axios.post("http://localhost:80/api/authenticate",data).then((r)=>{
             if(r.data.status=='success'){
                 console.log(r.data.cookie)
-                   alert("signed in")
-                    sessionStorage.setItem("cartitems",0)   
-                    nav("/")   
+                setshow(true)
+                sessionStorage.setItem("cartitems",0)  
+                return 
             }
             else{
                 alert(r.data.status)
+                return
             }
-         })
+         }) 
+                    
         
     }
 
     return (
         <>
+            <M_s show={show} name={ur.current.value} setshow={setshow}/>
             <div style={{ overflow: "hidden" }} >
 
                 <Nav_bar phone={false} shoe={false} tshirt={false} home={true} widths={"1900px"} signin={false} cart={false}/>

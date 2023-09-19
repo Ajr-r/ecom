@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useContext, useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -7,17 +7,16 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Link } from "react-router-dom";
 import cartsvg from "./assets/cart.svg";
 import { Modal_cust } from "./ui_comp/model.jsx";
-
-
-
-export function Nav_bar({phone,shoe,tshirt,home,widths,search,cart,logout}) {
-    let [signin,setsignin]=useState(true)
+import axios from "axios";
+import { searchdata } from "./main.jsx";
+export function Nav_bar({phone,shoe,tshirt,home,widths,search,cart,logout,signin}) {
     let [ph, setph] = useState("Search")
     let [idx, setidx] = useState(0)
     const [badgenum,setbadenum]=useState(sessionStorage.getItem("cartitems"))
     const nav=useNavigate()
     const [show,setshow]=useState(false)
-
+    let n=useContext(searchdata)
+    // console.log(n)
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -35,7 +34,8 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search,cart,logout}) {
     useEffect(()=>{
         if(!sessionStorage.getItem("cartitems"))sessionStorage.setItem("cartitems",0)
         else setbadenum(sessionStorage.getItem("cartitems"))
-    })
+
+    })  
     function navcheckout(e){
 
         if(!document.cookie.includes("id")){
@@ -44,11 +44,16 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search,cart,logout}) {
         }
         else nav("/checkout")
     }
-    useEffect(()=>{
-        if(document.cookie.includes("id")){
-            setsignin(false)
-        }
-    },[])
+    function signout(){
+        let data=JSON.parse(sessionStorage.getItem("items"))
+        axios.post("http://localhost:80/api/signout",data).then((r)=>{
+        sessionStorage.removeItem("cartitems")    
+        sessionStorage.removeItem("items")    
+        location.reload()            
+            
+
+        })
+    }
     return (
 
         <Navbar expand="lg" bg="dark" sticky="top" style={{ height: "52px", borderRadius: "7px", marginTop: "10px", width: widths, marginLeft: "auto", marginRight: "auto", backgroundColor: "green" }} className="bg-body-tertiary nav" data-bs-theme="dark">
@@ -68,11 +73,9 @@ export function Nav_bar({phone,shoe,tshirt,home,widths,search,cart,logout}) {
                 </Navbar.Collapse>
                 
                {search&& <input type="text" className="search" placeholder={ph} />}
-                        {!document.cookie&&signin?<Link to="signin" className="links signin" >Sign-in</Link>:
-                        logout&&<Link to="signin" className="links signin" >Sign-out</Link>}
+                        {!document.cookie&&signin&&<Link to="signin" className="links signin" >Sign-in</Link>}
+                        {document.cookie&&logout&&<Link onClick={signout} className="links signin" >Sign-out</Link>}
             
-
-
                {cart&&
                <>
                <img className="cartsvg" onClick={navcheckout} src={cartsvg} alt="" />
@@ -92,7 +95,7 @@ Nav_bar.defaultProps={
     home:false,
     widths:"1885px",
     search:true,
-
+    signin:true,
     cart:true,
     logout:false
 
@@ -177,7 +180,7 @@ export function Home() {
     return (
         <>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", overflow: "hidden" }}>
-                <Nav_bar />
+                <Nav_bar logout={true}/>
 
                 <br />
                 <Offers />

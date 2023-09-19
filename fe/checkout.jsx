@@ -8,7 +8,9 @@ export function Checkout() {
     const [chng,setchng]=useState(true)
     const nav=useNavigate()
     useEffect(() => {
-        let d = JSON.parse(sessionStorage.getItem("items"))
+        let ss=sessionStorage.getItem("items")
+        if(!ss)return
+        let d = JSON.parse(ss)
         setdata(d)
         
         setloaded(true)

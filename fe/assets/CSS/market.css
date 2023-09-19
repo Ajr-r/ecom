@@ -314,17 +314,3 @@ justify-content: center;
   display: flex;
   border-radius: 50%;
 }
-.check_cont{
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
-  background-color: #5F63B0;
-  width: 800px;
-  height: 800px;
-}
-.check_cont td{
-  width: 50px;
-  text-align: center;
-  background-color: #D9D9D9;
-}
